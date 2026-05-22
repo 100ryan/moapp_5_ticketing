@@ -1,0 +1,30 @@
+R_DEF: Internal format may change without notice
+local
+id btn_cancel_queue
+id btn_purchase
+id btn_sectionA
+id btn_sectionB
+id btn_sectionC
+id btn_sectionD
+id btn_success_ok
+id card_hero
+id card_justin
+id card_post
+id card_weeknd
+id grid_seats
+id log_text
+id screen_concerts
+id screen_payment
+id screen_seats
+id screen_sections
+id screen_sliding
+id screen_success
+id screen_waiting
+id slide_thumb
+id slide_track
+id tv_queue_eta
+id tv_queue_status
+id tv_selected_concert
+id tv_success_concert
+id tv_success_seat
+layout activity_main

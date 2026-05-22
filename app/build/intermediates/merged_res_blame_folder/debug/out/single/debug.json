@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.example.moapp-merged_res-4:/layout_activity_main.xml.flat",
+        "source": "com.example.moapp-main-6:/layout/activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\백승민\\.gradle\\daemon\\8.2\\com.example.moapp-merged_res-4:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\백승민\\.gradle\\daemon\\8.2\\com.example.moapp-main-6:\\layout\\activity_main.xml"
+    }
+]
