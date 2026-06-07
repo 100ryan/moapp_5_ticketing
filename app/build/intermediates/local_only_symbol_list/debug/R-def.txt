@@ -6,6 +6,7 @@ id btn_sectionA
 id btn_sectionB
 id btn_sectionC
 id btn_sectionD
+id btn_soldout_ok
 id btn_success_ok
 id card_hero
 id card_justin
@@ -18,6 +19,7 @@ id screen_payment
 id screen_seats
 id screen_sections
 id screen_sliding
+id screen_soldout
 id screen_success
 id screen_waiting
 id slide_thumb
@@ -25,6 +27,7 @@ id slide_track
 id tv_queue_eta
 id tv_queue_status
 id tv_selected_concert
+id tv_soldout_concert
 id tv_success_concert
 id tv_success_seat
 layout activity_main

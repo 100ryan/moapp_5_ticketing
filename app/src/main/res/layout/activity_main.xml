@@ -46,4 +46,11 @@
         <TextView android:id="@+id/tv_success_seat" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="" android:textSize="20sp" android:textStyle="bold" android:textColor="#E91E63" android:gravity="center" android:layout_marginTop="8dp"/>
         <Button android:id="@+id/btn_success_ok" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="확인" android:layout_marginTop="32dp"/>
     </LinearLayout>
+    <LinearLayout android:id="@+id/screen_soldout" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:gravity="center" android:padding="24dp">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎫" android:textSize="64sp" android:gravity="center"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="매진" android:textSize="40sp" android:textStyle="bold" android:textColor="#D32F2F" android:gravity="center" android:layout_marginTop="16dp"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="모든 좌석이 매진되었습니다" android:textSize="16sp" android:gravity="center" android:layout_marginTop="8dp"/>
+        <TextView android:id="@+id/tv_soldout_concert" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="" android:textSize="14sp" android:textStyle="bold" android:gravity="center" android:layout_marginTop="24dp"/>
+        <Button android:id="@+id/btn_soldout_ok" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="다른 콘서트 보기" android:layout_marginTop="32dp"/>
+    </LinearLayout>
 </LinearLayout>

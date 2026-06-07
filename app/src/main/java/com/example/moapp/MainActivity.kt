@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
 class MainActivity : AppCompatActivity() {
 
     private companion object {
-        const val MAX_SEATS = 200
+        const val MAX_SEATS = 5000  // 서버 protocol.h 와 일치
         const val COLOR_EMPTY    = "#2196F3"
         const val COLOR_TAKEN    = "#DDDDDD"
         const val COLOR_SELECTED = "#E91E63"
@@ -96,6 +96,9 @@ class MainActivity : AppCompatActivity() {
 
         // 6. 성공 화면 확인
         binding.btnSuccessOk.setOnClickListener { resetToConcerts() }
+
+        // 7. 매진 화면 확인
+        binding.btnSoldoutOk.setOnClickListener { resetToConcerts() }
     }
 
     private fun setupUI() {
@@ -118,15 +121,19 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val resp = runCatching { Net.call("HELLO:$deviceId") }.getOrDefault("")
             withContext(Dispatchers.Main) {
-                if (resp.startsWith("NONCE:")) {
-                    nonce = resp.substringAfter("NONCE:")
-                    binding.screenConcerts.visibility = View.GONE
-                    binding.screenSliding.visibility = View.VISIBLE
-                    binding.logText.text = "슬라이드 바를 끝까지 밀어주세요"
-                    binding.slideThumb.translationX = 0f
-                } else {
-                    Toast.makeText(this@MainActivity, "데몬 연결 실패", Toast.LENGTH_SHORT).show()
-                    binding.logText.text = "데몬 연결 실패 — 서버 상태 확인"
+                when {
+                    resp.startsWith("SOLD_OUT") -> showSoldOutScreen()
+                    resp.startsWith("NONCE:") -> {
+                        nonce = resp.substringAfter("NONCE:")
+                        binding.screenConcerts.visibility = View.GONE
+                        binding.screenSliding.visibility = View.VISIBLE
+                        binding.logText.text = "슬라이드 바를 끝까지 밀어주세요"
+                        binding.slideThumb.translationX = 0f
+                    }
+                    else -> {
+                        Toast.makeText(this@MainActivity, "데몬 연결 실패", Toast.LENGTH_SHORT).show()
+                        binding.logText.text = "데몬 연결 실패 — 서버 상태 확인"
+                    }
                 }
             }
         }
@@ -183,6 +190,7 @@ class MainActivity : AppCompatActivity() {
 
             withContext(Dispatchers.Main) {
                 when {
+                    resp.startsWith("SOLD_OUT") -> showSoldOutScreen()
                     resp.startsWith("TOKEN:") -> {
                         token = resp.substringAfter("TOKEN:")
                         Toast.makeText(this@MainActivity, "인증 완료, 토큰 발급", Toast.LENGTH_SHORT).show()
@@ -218,6 +226,10 @@ class MainActivity : AppCompatActivity() {
                 val resp = runCatching { Net.call("POLL:$deviceId") }.getOrDefault("")
                 withContext(Dispatchers.Main) {
                     when {
+                        resp.startsWith("SOLD_OUT") -> {
+                            queuePollJob?.cancel(); queuePollJob = null
+                            showSoldOutScreen()
+                        }
                         resp.startsWith("TOKEN:") -> {
                             token = resp.substringAfter("TOKEN:")
                             binding.screenWaiting.visibility = View.GONE
@@ -269,6 +281,13 @@ class MainActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val resp = runCatching { Net.call("FETCH_STATUS") }.getOrDefault("")
+
+            // 좌석 화면 진입과 동시에 매진 상태일 수 있음
+            if (resp.startsWith("SOLD_OUT")) {
+                withContext(Dispatchers.Main) { showSoldOutScreen() }
+                return@launch
+            }
+
             val statusData = if (resp.startsWith("STATUS:")) resp.substringAfter("STATUS:") else null
 
             withContext(Dispatchers.Main) {
@@ -326,6 +345,13 @@ class MainActivity : AppCompatActivity() {
             while (isActive) {
                 delay(SEAT_POLL_INTERVAL_MS)
                 val resp = runCatching { Net.call("FETCH_STATUS") }.getOrDefault("")
+                if (resp.startsWith("SOLD_OUT")) {
+                    withContext(Dispatchers.Main) {
+                        stopSeatPolling()
+                        showSoldOutScreen()
+                    }
+                    break
+                }
                 val s = if (resp.startsWith("STATUS:")) resp.substringAfter("STATUS:") else null
                 if (s != null && s.length >= MAX_SEATS) {
                     withContext(Dispatchers.Main) { applySeatDiff(s) }
@@ -408,6 +434,23 @@ class MainActivity : AppCompatActivity() {
         binding.screenSuccess.visibility = View.VISIBLE
     }
 
+    /** 모든 좌석 매진 시 호출. 진행 중이던 모든 폴링/대기 중단하고 매진 화면 표시. */
+    private fun showSoldOutScreen() {
+        queuePollJob?.cancel(); queuePollJob = null
+        stopSeatPolling()
+        binding.screenConcerts.visibility = View.GONE
+        binding.screenSliding.visibility = View.GONE
+        binding.screenWaiting.visibility = View.GONE
+        binding.screenSections.visibility = View.GONE
+        binding.screenSeats.visibility = View.GONE
+        binding.screenPayment.visibility = View.GONE
+        binding.screenSuccess.visibility = View.GONE
+        binding.tvSoldoutConcert.text =
+            if (currentConcert.isNotEmpty()) "[$currentConcert]" else ""
+        binding.screenSoldout.visibility = View.VISIBLE
+        binding.logText.text = "매진"
+    }
+
     private fun resetToConcerts() {
         queuePollJob?.cancel(); queuePollJob = null
         stopSeatPolling()
@@ -423,6 +466,7 @@ class MainActivity : AppCompatActivity() {
         binding.screenWaiting.visibility = View.GONE
         binding.screenPayment.visibility = View.GONE
         binding.screenSuccess.visibility = View.GONE
+        binding.screenSoldout.visibility = View.GONE
         binding.screenConcerts.visibility = View.VISIBLE
         binding.slideThumb.translationX = 0f
         binding.logText.text = "원하는 콘서트를 선택하세요."

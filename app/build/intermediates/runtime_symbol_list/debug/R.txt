@@ -3177,6 +3177,7 @@ int id btn_sectionA 0x7f080063
 int id btn_sectionB 0x7f080064
 int id btn_sectionC 0x7f080065
 int id btn_sectionD 0x7f080066
+int id btn_soldout_ok 0x7f08020b
 int id btn_success_ok 0x7f080207
 int id buttonPanel 0x7f080067
 int id cache_measures 0x7f080068
@@ -3462,6 +3463,7 @@ int id screen_payment 0x7f08017f
 int id screen_seats 0x7f080180
 int id screen_sections 0x7f080181
 int id screen_sliding 0x7f080182
+int id screen_soldout 0x7f08020c
 int id screen_success 0x7f080208
 int id screen_waiting 0x7f080204
 int id scroll 0x7f080183
@@ -3571,6 +3573,7 @@ int id triangle 0x7f0801ea
 int id tv_queue_eta 0x7f080205
 int id tv_queue_status 0x7f080206
 int id tv_selected_concert 0x7f0801eb
+int id tv_soldout_concert 0x7f08020d
 int id tv_success_concert 0x7f080209
 int id tv_success_seat 0x7f08020a
 int id unchecked 0x7f0801ec

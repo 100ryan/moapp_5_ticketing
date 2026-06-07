@@ -1,4 +1,4 @@
-#Thu May 21 19:50:18 KST 2026
+#Sun Jun 07 09:34:12 KST 2026
 base.0=C\:\\Projects\\ticketing\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Projects\\ticketing\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
 base.2=C\:\\Projects\\ticketing\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\11\\classes.dex

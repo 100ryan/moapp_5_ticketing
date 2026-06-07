@@ -41,6 +41,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final Button btnSectionD;
 
   @NonNull
+  public final Button btnSoldoutOk;
+
+  @NonNull
   public final Button btnSuccessOk;
 
   @NonNull
@@ -77,6 +80,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final LinearLayout screenSliding;
 
   @NonNull
+  public final LinearLayout screenSoldout;
+
+  @NonNull
   public final LinearLayout screenSuccess;
 
   @NonNull
@@ -98,6 +104,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final TextView tvSelectedConcert;
 
   @NonNull
+  public final TextView tvSoldoutConcert;
+
+  @NonNull
   public final TextView tvSuccessConcert;
 
   @NonNull
@@ -105,16 +114,18 @@ public final class ActivityMainBinding implements ViewBinding {
 
   private ActivityMainBinding(@NonNull LinearLayout rootView, @NonNull Button btnCancelQueue,
       @NonNull Button btnPurchase, @NonNull Button btnSectionA, @NonNull Button btnSectionB,
-      @NonNull Button btnSectionC, @NonNull Button btnSectionD, @NonNull Button btnSuccessOk,
-      @NonNull Button cardHero, @NonNull Button cardJustin, @NonNull Button cardPost,
-      @NonNull Button cardWeeknd, @NonNull GridLayout gridSeats, @NonNull TextView logText,
-      @NonNull LinearLayout screenConcerts, @NonNull LinearLayout screenPayment,
-      @NonNull LinearLayout screenSeats, @NonNull LinearLayout screenSections,
-      @NonNull LinearLayout screenSliding, @NonNull LinearLayout screenSuccess,
+      @NonNull Button btnSectionC, @NonNull Button btnSectionD, @NonNull Button btnSoldoutOk,
+      @NonNull Button btnSuccessOk, @NonNull Button cardHero, @NonNull Button cardJustin,
+      @NonNull Button cardPost, @NonNull Button cardWeeknd, @NonNull GridLayout gridSeats,
+      @NonNull TextView logText, @NonNull LinearLayout screenConcerts,
+      @NonNull LinearLayout screenPayment, @NonNull LinearLayout screenSeats,
+      @NonNull LinearLayout screenSections, @NonNull LinearLayout screenSliding,
+      @NonNull LinearLayout screenSoldout, @NonNull LinearLayout screenSuccess,
       @NonNull LinearLayout screenWaiting, @NonNull View slideThumb,
       @NonNull RelativeLayout slideTrack, @NonNull TextView tvQueueEta,
       @NonNull TextView tvQueueStatus, @NonNull TextView tvSelectedConcert,
-      @NonNull TextView tvSuccessConcert, @NonNull TextView tvSuccessSeat) {
+      @NonNull TextView tvSoldoutConcert, @NonNull TextView tvSuccessConcert,
+      @NonNull TextView tvSuccessSeat) {
     this.rootView = rootView;
     this.btnCancelQueue = btnCancelQueue;
     this.btnPurchase = btnPurchase;
@@ -122,6 +133,7 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnSectionB = btnSectionB;
     this.btnSectionC = btnSectionC;
     this.btnSectionD = btnSectionD;
+    this.btnSoldoutOk = btnSoldoutOk;
     this.btnSuccessOk = btnSuccessOk;
     this.cardHero = cardHero;
     this.cardJustin = cardJustin;
@@ -134,6 +146,7 @@ public final class ActivityMainBinding implements ViewBinding {
     this.screenSeats = screenSeats;
     this.screenSections = screenSections;
     this.screenSliding = screenSliding;
+    this.screenSoldout = screenSoldout;
     this.screenSuccess = screenSuccess;
     this.screenWaiting = screenWaiting;
     this.slideThumb = slideThumb;
@@ -141,6 +154,7 @@ public final class ActivityMainBinding implements ViewBinding {
     this.tvQueueEta = tvQueueEta;
     this.tvQueueStatus = tvQueueStatus;
     this.tvSelectedConcert = tvSelectedConcert;
+    this.tvSoldoutConcert = tvSoldoutConcert;
     this.tvSuccessConcert = tvSuccessConcert;
     this.tvSuccessSeat = tvSuccessSeat;
   }
@@ -205,6 +219,12 @@ public final class ActivityMainBinding implements ViewBinding {
       id = R.id.btn_sectionD;
       Button btnSectionD = ViewBindings.findChildViewById(rootView, id);
       if (btnSectionD == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_soldout_ok;
+      Button btnSoldoutOk = ViewBindings.findChildViewById(rootView, id);
+      if (btnSoldoutOk == null) {
         break missingId;
       }
 
@@ -280,6 +300,12 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.screen_soldout;
+      LinearLayout screenSoldout = ViewBindings.findChildViewById(rootView, id);
+      if (screenSoldout == null) {
+        break missingId;
+      }
+
       id = R.id.screen_success;
       LinearLayout screenSuccess = ViewBindings.findChildViewById(rootView, id);
       if (screenSuccess == null) {
@@ -322,6 +348,12 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tv_soldout_concert;
+      TextView tvSoldoutConcert = ViewBindings.findChildViewById(rootView, id);
+      if (tvSoldoutConcert == null) {
+        break missingId;
+      }
+
       id = R.id.tv_success_concert;
       TextView tvSuccessConcert = ViewBindings.findChildViewById(rootView, id);
       if (tvSuccessConcert == null) {
@@ -335,10 +367,11 @@ public final class ActivityMainBinding implements ViewBinding {
       }
 
       return new ActivityMainBinding((LinearLayout) rootView, btnCancelQueue, btnPurchase,
-          btnSectionA, btnSectionB, btnSectionC, btnSectionD, btnSuccessOk, cardHero, cardJustin,
-          cardPost, cardWeeknd, gridSeats, logText, screenConcerts, screenPayment, screenSeats,
-          screenSections, screenSliding, screenSuccess, screenWaiting, slideThumb, slideTrack,
-          tvQueueEta, tvQueueStatus, tvSelectedConcert, tvSuccessConcert, tvSuccessSeat);
+          btnSectionA, btnSectionB, btnSectionC, btnSectionD, btnSoldoutOk, btnSuccessOk, cardHero,
+          cardJustin, cardPost, cardWeeknd, gridSeats, logText, screenConcerts, screenPayment,
+          screenSeats, screenSections, screenSliding, screenSoldout, screenSuccess, screenWaiting,
+          slideThumb, slideTrack, tvQueueEta, tvQueueStatus, tvSelectedConcert, tvSoldoutConcert,
+          tvSuccessConcert, tvSuccessSeat);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
